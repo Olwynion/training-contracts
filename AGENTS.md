@@ -64,12 +64,23 @@
 ## Proto генерация
 - `platform grpc restore --proto-source vendor.protogen`
 
+## Docker
+- PostgreSQL поднимается через `docker compose up -d` из корня сервиса
+- Порт PostgreSQL: 5432, база: `training_auth`
+- Инициализация таблиц через `db/init.sql`
+
+## Run
+- `dotnet run --project src/<Service>/<Service>.csproj`
+- Сервисы слушают на портах: auth — 5002, training — 5003, ai — 5004, gateway — 5000
+- gRPC reflection включена (Postman может получить proto через server reflection)
+
 ## Before commit
 - `dotnet build`
 - `dotnet test`
 
 ## AppSettings
 - `appsettings.Local.json` — локальные настройки (gitignored)
+- `appsettings.Local.json` загружается в `Program.cs` через `AddJsonFile("appsettings.Local.json", optional: true)`
 
 ## Фичи C#
 - File-scoped namespaces (C# 10+)
