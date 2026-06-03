@@ -1,6 +1,6 @@
 syntax = "proto3";
 package ai;
-option csharp_namespace = "Training.AI";
+option csharp_namespace = "Training.AI.Proto";
 
 import "training/training.proto";
 
