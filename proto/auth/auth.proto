@@ -2,15 +2,12 @@ syntax = "proto3";
 package auth;
 option csharp_namespace = "Training.Auth";
 
-import "google/protobuf/empty.proto";
-import "common/common.proto";
-
 service AuthService {
-  rpc Register(RegisterRequest) returns (AuthResponse);
-  rpc Login(LoginRequest) returns (AuthResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
-  rpc RefreshToken(RefreshTokenRequest) returns (AuthResponse);
-  rpc Logout(common.IdRequest) returns (google.protobuf.Empty);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+  rpc Logout(LogoutRequest) returns (LogoutResponse);
 }
 
 message RegisterRequest {
@@ -19,12 +16,21 @@ message RegisterRequest {
   string name = 3;
 }
 
+message RegisterResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string user_id = 3;
+  string email = 4;
+  string name = 5;
+  int64 expires_at = 6;
+}
+
 message LoginRequest {
   string email = 1;
   string password = 2;
 }
 
-message AuthResponse {
+message LoginResponse {
   string access_token = 1;
   string refresh_token = 2;
   string user_id = 3;
@@ -47,3 +53,18 @@ message ValidateTokenResponse {
 message RefreshTokenRequest {
   string refresh_token = 1;
 }
+
+message RefreshTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string user_id = 3;
+  string email = 4;
+  string name = 5;
+  int64 expires_at = 6;
+}
+
+message LogoutRequest {
+  string user_id = 1;
+}
+
+message LogoutResponse {}

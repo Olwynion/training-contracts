@@ -2,24 +2,21 @@ syntax = "proto3";
 package training;
 option csharp_namespace = "Training.Training";
 
-import "google/protobuf/empty.proto";
-import "common/common.proto";
-
 service TrainingService {
   rpc GetExercises(GetExercisesRequest) returns (GetExercisesResponse);
-  rpc CreateExercise(CreateExerciseRequest) returns (ExerciseResponse);
-  rpc UpdateExercise(UpdateExerciseRequest) returns (ExerciseResponse);
-  rpc DeleteExercise(common.IdRequest) returns (google.protobuf.Empty);
+  rpc CreateExercise(CreateExerciseRequest) returns (CreateExerciseResponse);
+  rpc UpdateExercise(UpdateExerciseRequest) returns (UpdateExerciseResponse);
+  rpc DeleteExercise(DeleteExerciseRequest) returns (DeleteExerciseResponse);
 
-  rpc CreateWorkoutPlan(CreateWorkoutPlanRequest) returns (WorkoutPlanResponse);
-  rpc GetWorkoutPlan(GetWorkoutPlanRequest) returns (WorkoutPlanResponse);
+  rpc CreateWorkoutPlan(CreateWorkoutPlanRequest) returns (CreateWorkoutPlanResponse);
+  rpc GetWorkoutPlan(GetWorkoutPlanRequest) returns (GetWorkoutPlanResponse);
   rpc GetUserWorkoutPlans(GetUserWorkoutPlansRequest) returns (GetUserWorkoutPlansResponse);
-  rpc UpdateWorkoutPlan(UpdateWorkoutPlanRequest) returns (WorkoutPlanResponse);
-  rpc DeleteWorkoutPlan(common.IdRequest) returns (google.protobuf.Empty);
+  rpc UpdateWorkoutPlan(UpdateWorkoutPlanRequest) returns (UpdateWorkoutPlanResponse);
+  rpc DeleteWorkoutPlan(DeleteWorkoutPlanRequest) returns (DeleteWorkoutPlanResponse);
 
-  rpc GetCycleData(GetCycleDataRequest) returns (CycleDataResponse);
-  rpc SetCycle(SetCycleRequest) returns (google.protobuf.Empty);
-  rpc IncrementProgress(IncrementProgressRequest) returns (google.protobuf.Empty);
+  rpc GetCycleData(GetCycleDataRequest) returns (GetCycleDataResponse);
+  rpc SetCycle(SetCycleRequest) returns (SetCycleResponse);
+  rpc IncrementProgress(IncrementProgressRequest) returns (IncrementProgressResponse);
 }
 
 enum MuscleGroup {
@@ -105,6 +102,10 @@ message CreateExerciseRequest {
   string user_id = 4;
 }
 
+message CreateExerciseResponse {
+  Exercise exercise = 1;
+}
+
 message UpdateExerciseRequest {
   string id = 1;
   string name = 2;
@@ -113,22 +114,33 @@ message UpdateExerciseRequest {
   string user_id = 5;
 }
 
-message ExerciseResponse {
+message UpdateExerciseResponse {
   Exercise exercise = 1;
 }
+
+message DeleteExerciseRequest {
+  string id = 1;
+  string user_id = 2;
+}
+
+message DeleteExerciseResponse {}
 
 message CreateWorkoutPlanRequest {
   string user_id = 1;
   string name = 2;
 }
 
-message WorkoutPlanResponse {
+message CreateWorkoutPlanResponse {
   WorkoutPlan plan = 1;
 }
 
 message GetWorkoutPlanRequest {
   string id = 1;
   string user_id = 2;
+}
+
+message GetWorkoutPlanResponse {
+  WorkoutPlan plan = 1;
 }
 
 message GetUserWorkoutPlansRequest {
@@ -144,12 +156,23 @@ message UpdateWorkoutPlanRequest {
   string user_id = 2;
 }
 
+message UpdateWorkoutPlanResponse {
+  WorkoutPlan plan = 1;
+}
+
+message DeleteWorkoutPlanRequest {
+  string id = 1;
+  string user_id = 2;
+}
+
+message DeleteWorkoutPlanResponse {}
+
 message GetCycleDataRequest {
   string plan_id = 1;
   string user_id = 2;
 }
 
-message CycleDataResponse {
+message GetCycleDataResponse {
   CycleData data = 1;
 }
 
@@ -159,7 +182,11 @@ message SetCycleRequest {
   string user_id = 3;
 }
 
+message SetCycleResponse {}
+
 message IncrementProgressRequest {
   string plan_id = 1;
   string user_id = 2;
 }
+
+message IncrementProgressResponse {}
