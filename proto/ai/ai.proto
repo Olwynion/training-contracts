@@ -22,7 +22,7 @@ message ExerciseTemplate {
 }
 
 message GeneratePlanResponse {
-  string id = 1;
+  int64 id = 1;
   string plan_name = 2;
   string plan_json = 3;
   string created_at = 4;
@@ -33,7 +33,7 @@ message GetGenerationHistoryRequest {
 }
 
 message GenerationHistoryItem {
-  string id = 1;
+  int64 id = 1;
   string plan_name = 2;
   string prompt = 3;
   string created_at = 4;
