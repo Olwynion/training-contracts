@@ -1,0 +1,47 @@
+syntax = "proto3";
+package auth;
+option csharp_namespace = "Training.Auth";
+
+import "common/common.proto";
+
+service AuthService {
+  rpc Register(RegisterRequest) returns (AuthResponse);
+  rpc Login(LoginRequest) returns (AuthResponse);
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (AuthResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string password = 2;
+  string name = 3;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message AuthResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  string user_id = 3;
+  string email = 4;
+  string name = 5;
+  int64 expires_at = 6;
+}
+
+message ValidateTokenRequest {
+  string access_token = 1;
+}
+
+message ValidateTokenResponse {
+  bool is_valid = 1;
+  bool is_expired = 2;
+  string user_id = 3;
+  string email = 4;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}

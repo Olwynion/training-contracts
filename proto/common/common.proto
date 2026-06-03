@@ -1,0 +1,9 @@
+syntax = "proto3";
+package common;
+option csharp_namespace = "Training.Common";
+
+message Empty {}
+
+message IdRequest {
+  string id = 1;
+}

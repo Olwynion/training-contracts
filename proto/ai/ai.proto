@@ -1,0 +1,45 @@
+syntax = "proto3";
+package ai;
+option csharp_namespace = "Training.AI";
+
+import "common/common.proto";
+import "training/training.proto";
+
+service AiService {
+  rpc GeneratePlan(GeneratePlanRequest) returns (GeneratePlanResponse);
+  rpc GetGenerationHistory(GetGenerationHistoryRequest) returns (GetGenerationHistoryResponse);
+}
+
+message GeneratePlanRequest {
+  string user_id = 1;
+  string prompt = 2;
+  repeated ExerciseTemplate exercises = 3;
+}
+
+message ExerciseTemplate {
+  string name = 1;
+  double one_rm = 2;
+  training.MuscleGroup muscle_group = 3;
+}
+
+message GeneratePlanResponse {
+  string id = 1;
+  string plan_name = 2;
+  string plan_json = 3;
+  string created_at = 4;
+}
+
+message GetGenerationHistoryRequest {
+  string user_id = 1;
+}
+
+message GenerationHistoryItem {
+  string id = 1;
+  string plan_name = 2;
+  string prompt = 3;
+  string created_at = 4;
+}
+
+message GetGenerationHistoryResponse {
+  repeated GenerationHistoryItem items = 1;
+}

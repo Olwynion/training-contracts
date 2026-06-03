@@ -1,0 +1,174 @@
+syntax = "proto3";
+package training;
+option csharp_namespace = "Training.Training";
+
+import "common/common.proto";
+
+service TrainingService {
+  rpc GetExercises(GetExercisesRequest) returns (GetExercisesResponse);
+  rpc CreateExercise(CreateExerciseRequest) returns (ExerciseResponse);
+  rpc UpdateExercise(UpdateExerciseRequest) returns (ExerciseResponse);
+  rpc DeleteExercise(DeleteExerciseRequest) returns (common.Empty);
+
+  rpc CreateWorkoutPlan(CreateWorkoutPlanRequest) returns (WorkoutPlanResponse);
+  rpc GetWorkoutPlan(GetWorkoutPlanRequest) returns (WorkoutPlanResponse);
+  rpc GetUserWorkoutPlans(GetUserWorkoutPlansRequest) returns (GetUserWorkoutPlansResponse);
+  rpc UpdateWorkoutPlan(UpdateWorkoutPlanRequest) returns (WorkoutPlanResponse);
+  rpc DeleteWorkoutPlan(DeleteWorkoutPlanRequest) returns (common.Empty);
+
+  rpc GetCycleData(GetCycleDataRequest) returns (CycleDataResponse);
+  rpc SetCycle(SetCycleRequest) returns (common.Empty);
+  rpc IncrementProgress(IncrementProgressRequest) returns (common.Empty);
+}
+
+enum MuscleGroup {
+  MUSCLE_GROUP_UNSPECIFIED = 0;
+  CHEST = 1;
+  BACK = 2;
+  LEGS = 3;
+  SHOULDERS = 4;
+  ARMS = 5;
+  CORE = 6;
+}
+
+message Exercise {
+  string id = 1;
+  string name = 2;
+  double default_one_rm = 3;
+  MuscleGroup muscle_group = 4;
+  string user_id = 5;
+  bool is_built_in = 6;
+}
+
+message PlanDay {
+  string id = 1;
+  string day_name = 2;
+  MuscleGroup focus_group = 3;
+  int32 sort_order = 4;
+  repeated DayExercise exercises = 5;
+}
+
+message DayExercise {
+  string id = 1;
+  string exercise_id = 2;
+  string exercise_name = 3;
+  int32 sets = 4;
+  int32 sort_order = 5;
+}
+
+message WorkoutPlan {
+  string id = 1;
+  string user_id = 2;
+  string name = 3;
+  repeated PlanDay days = 4;
+  int32 cycle_number = 5;
+  int32 progress_counter = 6;
+}
+
+message CycleData {
+  string plan_id = 1;
+  int32 cycle_number = 2;
+  bool is_light_week = 3;
+  int32 progress_counter = 4;
+  repeated DayData days = 5;
+}
+
+message DayData {
+  string day_label = 1;
+  MuscleGroup focus_group = 2;
+  repeated ExerciseSet sets = 3;
+}
+
+message ExerciseSet {
+  string exercise_name = 1;
+  double one_rm = 2;
+  int32 sets = 3;
+  double percentage = 4;
+  int32 reps = 5;
+  double working_weight = 6;
+  bool is_focus = 7;
+}
+
+message GetExercisesRequest {
+  string user_id = 1;
+}
+
+message GetExercisesResponse {
+  repeated Exercise exercises = 1;
+}
+
+message CreateExerciseRequest {
+  string name = 1;
+  double default_one_rm = 2;
+  MuscleGroup muscle_group = 3;
+  string user_id = 4;
+}
+
+message UpdateExerciseRequest {
+  string id = 1;
+  string name = 2;
+  double default_one_rm = 3;
+  MuscleGroup muscle_group = 4;
+  string user_id = 5;
+}
+
+message DeleteExerciseRequest {
+  string id = 1;
+  string user_id = 2;
+}
+
+message ExerciseResponse {
+  Exercise exercise = 1;
+}
+
+message CreateWorkoutPlanRequest {
+  string user_id = 1;
+  string name = 2;
+}
+
+message WorkoutPlanResponse {
+  WorkoutPlan plan = 1;
+}
+
+message GetWorkoutPlanRequest {
+  string id = 1;
+  string user_id = 2;
+}
+
+message GetUserWorkoutPlansRequest {
+  string user_id = 1;
+}
+
+message GetUserWorkoutPlansResponse {
+  repeated WorkoutPlan plans = 1;
+}
+
+message UpdateWorkoutPlanRequest {
+  WorkoutPlan plan = 1;
+  string user_id = 2;
+}
+
+message DeleteWorkoutPlanRequest {
+  string id = 1;
+  string user_id = 2;
+}
+
+message GetCycleDataRequest {
+  string plan_id = 1;
+  string user_id = 2;
+}
+
+message CycleDataResponse {
+  CycleData data = 1;
+}
+
+message SetCycleRequest {
+  string plan_id = 1;
+  int32 cycle_number = 2;
+  string user_id = 3;
+}
+
+message IncrementProgressRequest {
+  string plan_id = 1;
+  string user_id = 2;
+}
