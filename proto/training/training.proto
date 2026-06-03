@@ -1,6 +1,6 @@
 syntax = "proto3";
 package training;
-option csharp_namespace = "Training.Training";
+option csharp_namespace = "Training.Training.Proto";
 
 service TrainingService {
   rpc GetExercises(GetExercisesRequest) returns (GetExercisesResponse);

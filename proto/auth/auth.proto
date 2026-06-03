@@ -19,7 +19,7 @@ message RegisterRequest {
 message RegisterResponse {
   string access_token = 1;
   string refresh_token = 2;
-  string user_id = 3;
+  int64 user_id = 3;
   string email = 4;
   string name = 5;
   int64 expires_at = 6;
@@ -33,7 +33,7 @@ message LoginRequest {
 message LoginResponse {
   string access_token = 1;
   string refresh_token = 2;
-  string user_id = 3;
+  int64 user_id = 3;
   string email = 4;
   string name = 5;
   int64 expires_at = 6;
@@ -46,7 +46,7 @@ message ValidateTokenRequest {
 message ValidateTokenResponse {
   bool is_valid = 1;
   bool is_expired = 2;
-  string user_id = 3;
+  int64 user_id = 3;
   string email = 4;
 }
 
@@ -57,14 +57,14 @@ message RefreshTokenRequest {
 message RefreshTokenResponse {
   string access_token = 1;
   string refresh_token = 2;
-  string user_id = 3;
+  int64 user_id = 3;
   string email = 4;
   string name = 5;
   int64 expires_at = 6;
 }
 
 message LogoutRequest {
-  string user_id = 1;
+  int64 user_id = 1;
 }
 
 message LogoutResponse {}
