@@ -2,6 +2,7 @@ syntax = "proto3";
 package auth;
 option csharp_namespace = "Training.Auth";
 
+import "google/protobuf/empty.proto";
 import "common/common.proto";
 
 service AuthService {
@@ -9,6 +10,7 @@ service AuthService {
   rpc Login(LoginRequest) returns (AuthResponse);
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
   rpc RefreshToken(RefreshTokenRequest) returns (AuthResponse);
+  rpc Logout(common.IdRequest) returns (google.protobuf.Empty);
 }
 
 message RegisterRequest {

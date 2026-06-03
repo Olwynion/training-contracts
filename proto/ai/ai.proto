@@ -2,7 +2,7 @@ syntax = "proto3";
 package ai;
 option csharp_namespace = "Training.AI";
 
-import "common/common.proto";
+import "google/protobuf/empty.proto";
 import "training/training.proto";
 
 service AiService {
