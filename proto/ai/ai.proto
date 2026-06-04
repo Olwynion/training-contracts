@@ -13,6 +13,9 @@ message GeneratePlanRequest {
   string user_id = 1;
   string prompt = 2;
   repeated ExerciseTemplate exercises = 3;
+  int32 days_per_week = 4;
+  string program_type = 5;   // "fullbody" | "split"
+  training.MuscleGroup focus_group = 6;
 }
 
 message ExerciseTemplate {
