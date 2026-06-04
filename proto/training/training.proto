@@ -23,6 +23,7 @@ service TrainingService {
   rpc SaveOneRms(SaveOneRmsRequest) returns (SaveOneRmsResponse);
   rpc UpdatePlanDays(UpdatePlanDaysRequest) returns (UpdatePlanDaysResponse);
   rpc GetBuiltInExercises(GetBuiltInExercisesRequest) returns (GetBuiltInExercisesResponse);
+  rpc GetUserOneRms(GetUserOneRmsRequest) returns (GetUserOneRmsResponse);
 }
 
 enum MuscleGroup {
@@ -233,6 +234,14 @@ message OneRmEntry {
 }
 
 message SaveOneRmsResponse {}
+
+message GetUserOneRmsRequest {
+  string user_id = 1;
+}
+
+message GetUserOneRmsResponse {
+  repeated OneRmEntry entries = 1;
+}
 
 message GetBuiltInExercisesRequest {}
 
