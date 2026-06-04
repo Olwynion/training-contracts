@@ -17,6 +17,12 @@ service TrainingService {
   rpc GetCycleData(GetCycleDataRequest) returns (GetCycleDataResponse);
   rpc SetCycle(SetCycleRequest) returns (SetCycleResponse);
   rpc IncrementProgress(IncrementProgressRequest) returns (IncrementProgressResponse);
+
+  rpc SavePreferences(SavePreferencesRequest) returns (SavePreferencesResponse);
+  rpc GetUserPreferences(GetUserPreferencesRequest) returns (GetUserPreferencesResponse);
+  rpc SaveOneRms(SaveOneRmsRequest) returns (SaveOneRmsResponse);
+  rpc UpdatePlanDays(UpdatePlanDaysRequest) returns (UpdatePlanDaysResponse);
+  rpc GetBuiltInExercises(GetBuiltInExercisesRequest) returns (GetBuiltInExercisesResponse);
 }
 
 enum MuscleGroup {
@@ -25,8 +31,9 @@ enum MuscleGroup {
   BACK = 2;
   LEGS = 3;
   SHOULDERS = 4;
-  ARMS = 5;
-  CORE = 6;
+  BICEPS = 5;
+  TRICEPS = 6;
+  CORE = 7;
 }
 
 message Exercise {
@@ -190,3 +197,70 @@ message IncrementProgressRequest {
 }
 
 message IncrementProgressResponse {}
+
+message UserPreferences {
+  string user_id = 1;
+  int32 days_per_week = 2;
+  string program_type = 3; // "fullbody" | "split"
+  MuscleGroup focus_group = 4; // unspecified = равномерно
+}
+
+message SavePreferencesRequest {
+  string user_id = 1;
+  int32 days_per_week = 2;
+  string program_type = 3;
+  MuscleGroup focus_group = 4;
+}
+
+message SavePreferencesResponse {}
+
+message GetUserPreferencesRequest {
+  string user_id = 1;
+}
+
+message GetUserPreferencesResponse {
+  UserPreferences preferences = 1;
+}
+
+message SaveOneRmsRequest {
+  string user_id = 1;
+  repeated OneRmEntry entries = 2;
+}
+
+message OneRmEntry {
+  int64 exercise_id = 1;
+  double one_rm = 2;
+}
+
+message SaveOneRmsResponse {}
+
+message GetBuiltInExercisesRequest {}
+
+message GetBuiltInExercisesResponse {
+  repeated Exercise exercises = 1;
+}
+
+message UpdatePlanDaysRequest {
+  int64 plan_id = 1;
+  string user_id = 2;
+  repeated PlanDayUpdate days = 3;
+}
+
+message PlanDayUpdate {
+  int64 id = 1;       // 0 = новый день
+  string day_name = 2;
+  MuscleGroup focus_group = 3;
+  int32 sort_order = 4;
+  repeated DayExerciseUpdate exercises = 5;
+}
+
+message DayExerciseUpdate {
+  int64 id = 1;          // 0 = новое
+  int64 exercise_id = 2;
+  int32 sets = 3;
+  int32 sort_order = 4;
+}
+
+message UpdatePlanDaysResponse {
+  WorkoutPlan plan = 1;
+}
