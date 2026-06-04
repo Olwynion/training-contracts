@@ -259,6 +259,7 @@ message DayExerciseUpdate {
   int64 exercise_id = 2;
   int32 sets = 3;
   int32 sort_order = 4;
+  string exercise_name = 5;
 }
 
 message UpdatePlanDaysResponse {
